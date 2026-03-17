@@ -10,20 +10,24 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const backend = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  const backend = import.meta.env.backend_url
 
   async function generateCaption(file: File) {
     setLoading(true)
     setError(null)
     setCaption(null)
+    const apiUrl = import.meta.env.VITE_API_URL
     try {
-      const form = new FormData()
-      form.append('file', file)
-      const res = await fetch(`${backend}/generate-caption`, { method: 'POST', body: form })
-      if (!res.ok) {
-        throw new Error(`Generation failed: HTTP ${res.status}`)
-      }
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const res = await fetch(`${apiUrl}//generate-caption`, {
+        method: 'POST',
+        body: formData,
+      })
+
       const data = await res.json()
+      console.log(data)
       setCaption(data.caption)
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Caption generation failed'
