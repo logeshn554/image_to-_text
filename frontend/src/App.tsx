@@ -12,7 +12,7 @@ export default function App() {
 
   const backend = import.meta.env.backend_url
 
-  async function generateCaption(file: File) {
+  async function generateCaption(file: File): Promise<void> {
     setLoading(true)
     setError(null)
     setCaption(null)
@@ -21,12 +21,12 @@ export default function App() {
       const formData = new FormData()
       formData.append('file', file)
 
-      const res = await fetch(`${apiUrl}//generate-caption`, {
+      const res = await fetch(`${apiUrl}/generate-caption`, {
         method: 'POST',
         body: formData,
       })
 
-      const data = await res.json()
+      const data = await res.json() as { caption: string }
       console.log(data)
       setCaption(data.caption)
     } catch (err) {
