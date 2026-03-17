@@ -4,7 +4,7 @@ import UploadForm from './components/UploadForm'
 import LoadingSpinner from './components/LoadingSpinner'
 import ErrorMessage from './components/ErrorMessage'
 import './App.css'
-
+import meta.env
 export default function App() {
   const [caption, setCaption] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
